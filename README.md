@@ -1,3 +1,10 @@
+my modifications to make it work:
+
+- Replaced all `device_malloc_allocator` to `device_allocator` in labels.h, in accordance with test.cu
+- Wrote and verified a Makefile, which was not provided in the original repository
+
+---
+
 kmeans
 ======
 
@@ -31,13 +38,30 @@ them.
 
 Prerequisites
 =============
-* CUDA toolkit 4.2
-* CUB 1.0.2 https://github.com/NVLabs/cub
+* ~~CUDA toolkit 4.2~~
+* ~~CUB 1.0.2 https://github.com/NVLabs/cub~~
+* tested on CUDA 11.0, but should be compatible with ealier version.
 
 Build
 =====
-To build, edit Makefile to specify CUB_HOME, the location of your CUB files
-Then call make.
+~~To build, edit Makefile to specify CUB_HOME, the location of your CUB files~~
+~~Then call make.~~
+
+1. Check the compute capability of your GPU [here](https://developer.nvidia.com/cuda-gpus#compute)
+
+2. Execute the following command, and decide your `CUDA_ARCH` accordingly.
+    ```bash
+    nvcc --help | grep -F 'gpu-architecture <arch>' -A 27
+    ```
+
+3. Edit `CUDA_ARCH` in Makefile
+
+4. If you need a custom version of CUB, edit  `CUB_HOME` in Makefile
+
+5. Call make, and a executable file `test` will be created.
+    ```bash
+    make
+    ```
 
 Run
 ===
