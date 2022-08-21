@@ -1,11 +1,12 @@
+#include <cstdlib>
+#include <iostream>
+
+#include "cuda.h"
 #include <thrust/device_vector.h>
+
 #include "kmeans.h"
 #include "timer.h"
 #include "util.h"
-#include <iostream>
-#include "cuda.h"
-
-#include <cstdlib>
 
 template<typename T>
 void fill_array(T& array, int m, int n) {

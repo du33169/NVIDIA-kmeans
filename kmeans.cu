@@ -1,6 +1,8 @@
+#include <thrust/reduce.h>
+
 #include "kmeans.h"
 #include "util.h"
-#include <thrust/reduce.h>
+
 
 namespace kmeans {
 
