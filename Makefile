@@ -1,9 +1,17 @@
+# [CUDA_ARCH]
+# specify gpu architecture, corresponding to your GPU Compute Capability
+# https://developer.nvidia.com/cuda-gpus#compute
+# execute: 
+# $	nvcc --help | grep -F 'gpu-architecture <arch>' -A 27
+# for details,
+
 CUDA_ARCH ?= compute_80 
-# for detail, execute command below:
-# nvcc --help | grep -F 'gpu-architecture <arch>' -A 27
 
-#CUB_HOME ?= ./cub   # skip for higher version of CUDA
+# [CUB_HOME]
+# customize cub path, uncomment and edit if needed
+# CUB_HOME ?= ./cub   
 
+# [COMPILER]
 CC   = nvcc 
 ARGS = -arch=$(CUDA_ARCH) -Xptxas -v  -lineinfo
 
