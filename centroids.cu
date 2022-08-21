@@ -7,6 +7,9 @@
 
 #include "labels.h"
 
+#if !defined(__CUDA_ARCH__) || __CUDA_ARCH__ >= 600 
+// atomicAdd has been included in CUDA from version 8.0+
+#else
 __device__ double atomicAdd(double* address, double val)
 {
     unsigned long long int* address_as_ull =
@@ -20,6 +23,8 @@ __device__ double atomicAdd(double* address, double val)
     } while (assumed != old);
     return __longlong_as_double(old);
 }
+
+#endif
 
 namespace kmeans {
 namespace detail {
