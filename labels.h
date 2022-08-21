@@ -1,6 +1,6 @@
 #pragma once
 #include <thrust/device_vector.h>
-#include <thrust/device_malloc_allocator.h>
+#include <thrust/device_allocator.h>
 #include <cub/cub.cuh>
 
 extern cudaStream_t cuda_stream[16];
@@ -16,7 +16,7 @@ void labels_close();
 
 template<typename T>
 void memcpy(thrust::host_vector<T, std::allocator<T> > &H, 
-            thrust::device_vector<T, thrust::device_malloc_allocator<T> > &D) {
+            thrust::device_vector<T, thrust::device_allocator<T> > &D) {
     int dev_num;
     cudaGetDevice(&dev_num);
     cudaMemcpyAsync(thrust::raw_pointer_cast(H.data()), 
@@ -25,7 +25,7 @@ void memcpy(thrust::host_vector<T, std::allocator<T> > &H,
 }
 
 template<typename T>
-void memcpy(thrust::device_vector<T, thrust::device_malloc_allocator<T> > &D, 
+void memcpy(thrust::device_vector<T, thrust::device_allocator<T> > &D, 
             thrust::host_vector<T, std::allocator<T> > &H) {
     int dev_num;
     cudaGetDevice(&dev_num);
@@ -34,8 +34,8 @@ void memcpy(thrust::device_vector<T, thrust::device_malloc_allocator<T> > &D,
                sizeof(T) * H.size(), cudaMemcpyHostToDevice, cuda_stream[dev_num]);
 }
 template<typename T>
-void memcpy(thrust::device_vector<T, thrust::device_malloc_allocator<T> > &Do, 
-            thrust::device_vector<T, thrust::device_malloc_allocator<T> > &Di) {
+void memcpy(thrust::device_vector<T, thrust::device_allocator<T> > &Do, 
+            thrust::device_vector<T, thrust::device_allocator<T> > &Di) {
     int dev_num;
     cudaGetDevice(&dev_num);
     cudaMemcpyAsync(thrust::raw_pointer_cast(Do.data()), 
@@ -43,7 +43,7 @@ void memcpy(thrust::device_vector<T, thrust::device_malloc_allocator<T> > &Do,
                sizeof(T) * Di.size(), cudaMemcpyDeviceToDevice, cuda_stream[dev_num]);
 }
 template<typename T>
-void memzero(thrust::device_vector<T, thrust::device_malloc_allocator<T> >& D) {
+void memzero(thrust::device_vector<T, thrust::device_allocator<T> >& D) {
     int dev_num;
     cudaGetDevice(&dev_num);
     cudaMemsetAsync(thrust::raw_pointer_cast(D.data()), 0, sizeof(T)*D.size(), cuda_stream[dev_num]);
