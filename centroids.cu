@@ -1,3 +1,5 @@
+#include "centroids.h"
+
 #include <thrust/device_vector.h>
 #include <thrust/sort.h>
 #include <thrust/fill.h>
