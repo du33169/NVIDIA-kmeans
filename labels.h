@@ -1,5 +1,6 @@
 #pragma once
 #include <thrust/device_vector.h>
+#include <thrust/device_malloc_allocator.h>
 #include <cub/cub.cuh>
 
 extern cudaStream_t cuda_stream[16];

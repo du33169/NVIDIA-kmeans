@@ -1,4 +1,5 @@
 #include <thrust/device_vector.h>
+#include <thrust/device_malloc_allocator.h>
 #include "kmeans.h"
 #include "timer.h"
 #include "util.h"
