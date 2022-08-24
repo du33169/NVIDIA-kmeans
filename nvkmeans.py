@@ -28,5 +28,5 @@ class NVKmeans:
 		centers.reshape((self.k,d))
 		self.centers=torch.from_numpy(centers)
 		print('[py]done')
-		return torch.from_numpy(labels)
+		return torch.from_numpy(labels.ravel())
 
