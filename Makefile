@@ -19,18 +19,18 @@ test: timer.o labels.o centroids.o kmeans.o test.cu
 	$(CC) $(ARGS) -lcublas $^ -o $@
 
 timer.o: timer.cu timer.h
-	$(CC) $(ARGS) -c timer.cu -o $@
+	$(CC) $(ARGS) -Xcompiler "-fPIC" -c timer.cu -o $@
 
 labels.o: labels.cu labels.h
-	$(CC) $(ARGS) -c labels.cu -o $@
+	$(CC) $(ARGS) -Xcompiler "-fPIC" -c labels.cu -o $@
 
 centroids.o: centroids.cu centroids.h
-	$(CC) $(ARGS) -c centroids.cu -o $@
+	$(CC) $(ARGS) -Xcompiler "-fPIC" -c centroids.cu -o $@
 
 kmeans.o: kmeans.cu kmeans.h util.h
-	$(CC) $(ARGS) -c kmeans.cu -o $@
+	$(CC) $(ARGS) -Xcompiler "-fPIC" -c kmeans.cu -o $@
 
-shared:
-	$(CC) -arch=$(CUDA_ARCH) -v -shared -Xcompiler "-fPIC" -c kmeans.cu -o libnvkmeans.so
+shared: nvkmeans.cu timer.o labels.o centroids.o kmeans.o
+	$(CC) -arch=$(CUDA_ARCH) -shared -Xcompiler "-fPIC -fvisibility=hidden" -lcublas nvkmeans.cu timer.o labels.o centroids.o kmeans.o -o libnvkmeans.so
 clean:
 	rm -f *.o test
