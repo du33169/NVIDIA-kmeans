@@ -3,14 +3,6 @@
 #include <thrust/device_vector.h>
 #include "kmeans.h"
 
-void random_labels(thrust::device_vector<int>& labels, int n, int k) {
-    thrust::host_vector<int> host_labels(n);
-    for(int i = 0; i < n; i++) {
-        host_labels[i] = rand() % k;
-    }
-    labels = host_labels;
-}
-
 #include <cstdio>
 extern "C"
 {
