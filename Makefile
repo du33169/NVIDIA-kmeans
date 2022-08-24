@@ -30,5 +30,7 @@ centroids.o: centroids.cu centroids.h
 kmeans.o: kmeans.cu kmeans.h util.h
 	$(CC) $(ARGS) -c kmeans.cu -o $@
 
+shared:
+	$(CC) -arch=$(CUDA_ARCH) -v -shared -Xcompiler "-fPIC" -c kmeans.cu -o libnvkmeans.so
 clean:
 	rm -f *.o test
