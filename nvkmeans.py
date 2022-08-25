@@ -21,7 +21,7 @@ class NVKmeans:
 		print('[py]invoking clib...')
 		self.iter=nvkmeans.fit(
 			c_int(maxIter),c_int(n),c_int(d),c_int(self.k),
-			as_ctypes(X.numpy().ravel()),
+			as_ctypes(X.numpy().ravel().astype(np.double)),
 			as_ctypes(centers),
 			as_ctypes(labels),
 			)
