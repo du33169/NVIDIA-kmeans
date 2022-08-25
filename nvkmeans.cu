@@ -16,6 +16,7 @@ extern "C"
 
 	)
 {
+	printf("[nvkmeans] n=%d,d=%d,k=%d",n,d,k);	
 	thrust::device_vector<double> *data_v[1];
     thrust::device_vector<int> *labels_v[1];
     thrust::device_vector<double> *centroids_v[1];
