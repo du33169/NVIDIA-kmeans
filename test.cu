@@ -141,8 +141,8 @@ int main() {
     std::cout << "More tiny test: m" << std::endl;
     std::cout << "Huge test: h: " << std::endl;
     char c;
-    //std::cin >> c;
-    c = 'h';
+    std::cin >> c;
+    //c = 'h';
     switch (c) {
     case 't':
         tiny_test();
