@@ -16,7 +16,7 @@ class NVKmeans:
 		centers, indices = kmeans_plusplus(X.numpy(), n_clusters=self.k, random_state=0)
 		centers=centers.ravel()
 		centers=centers.astype(np.double)
-		labels=np.empty((n,1),dtype=np.int32)
+		labels=np.empty(n,dtype=np.int32)
 
 		print('[py]invoking clib...')
 		self.iter=nvkmeans.fit(
@@ -25,8 +25,9 @@ class NVKmeans:
 			as_ctypes(centers),
 			as_ctypes(labels),
 			)
+		print('labels:',np.unique(labels))
 		centers.reshape((self.k,d))
 		self.centers=torch.from_numpy(centers)
 		print('[py]done')
-		return torch.from_numpy(labels.ravel())
+		return torch.from_numpy(labels)
 
