@@ -31,12 +31,23 @@ extern "C"
     labels_v[0]    = new thrust::device_vector<int>(n);
 
 	bool init_from_labels = false;
-	double threshold = 1e-4;
+	double threshold = 1e-6;
 	int n_gpu=1;
 	cout<<("[nvkmeans]running kmeans")<<endl;
 	int iter = kmeans::kmeans(maxIter, n, d, k, data_v, labels_v, centroids_v, distances_v, n_gpu, init_from_labels,threshold);
 	cout<<("[nvkmeans]copy back data")<<endl;
 	int* labels_dv= thrust::raw_pointer_cast(labels_v[0]->data());
+	cudaError_t ret=cudaMemcpy(labels, labels_dv, n * sizeof(int), cudaMemcpyDeviceToHost);
+	if(ret!=cudaSuccess)
+		cout << '[nvkmeans] copy back labels failed.' << endl;
+	double *centers_dv = thrust::raw_pointer_cast(centroids_v[0]->data());
+	cudaError_t ret=cudaMemcpy(centers, centers_dv, k*d * sizeof(double), cudaMemcpyDeviceToHost);
+	if(ret!=cudaSuccess)
+		cout << '[nvkmeans] copy back centers failed.' << endl;
+	double *centers_dv = thrust::raw_pointer_cast(centroids_v[0]->data());
+	cout<<"labels:";
+	for(int i=0;i<=20;++i){cout<<(*labels_v[0])[i]<<',';}
+	cout<<endl;
 	cout<<("[nvkmeans]cleaning")<<endl;
 	//clean
 	delete (data_v[0]);
